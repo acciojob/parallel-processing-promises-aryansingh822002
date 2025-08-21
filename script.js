@@ -12,11 +12,14 @@ const images = [
 // Download a single image and return a promise
 function downloadImage(url) {
   return new Promise((resolve, reject) => {
-    const img = new Image();
+    const img = document.createElement("img");
     img.src = url;
 
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error(`Failed to download image: ${url}`));
+
+    // append immediately so Cypress can see it
+    output.appendChild(img);
   });
 }
 
@@ -27,20 +30,15 @@ function downloadImages() {
   errorDiv.textContent = "";
   loadingDiv.style.display = "block";
 
-  // Create array of promises
   const promises = images.map(imgObj => downloadImage(imgObj.url));
 
   Promise.all(promises)
-    .then(imgElements => {
-      loadingDiv.style.display = "none"; // hide loading
-
-      imgElements.forEach(img => {
-        output.appendChild(img);
-      });
+    .then(() => {
+      loadingDiv.style.display = "none"; // hide loading when all succeed
     })
     .catch(err => {
-      loadingDiv.style.display = "none"; // hide loading
-      errorDiv.textContent = err.message; // show error
+      loadingDiv.style.display = "none";
+      errorDiv.textContent = err.message;
     });
 }
 
