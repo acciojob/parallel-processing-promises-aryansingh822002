@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      #loading {
+        display: none;
+        text-align: center;
+        font-weight: bold;
+      }
+      #error {
+        color: red;
+        margin-top: 10px;
+      }
+      img {
+        margin: 5px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+      }
+    </style>
   </head>
-
   <body>
-    <!-- the entire body must be written by student -->
+    <!-- Output area -->
+    <div id="loading">Loading...</div>
+    <div id="error"></div>
     <div id="output"></div>
+
+    <button id="download-images-button">Download Images</button>
+
     <script type="text/javascript" src="./script.js"></script>
   </body>
 </html>
